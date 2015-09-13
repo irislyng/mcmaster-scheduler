@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>MacScheduler</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="" />
+		<link href='https://fonts.googleapis.com/css?family=Lato:400,700,700italic,300' rel='stylesheet' type='text/css'>
+
+		<!-- Include Libraries -->
+		<script src="bower_components/angular/angular.min.js"></script>
+		<script src="bower_components/angular-resource/angular-resource.min.js"></script>
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+		<!--Include JS -->
+		<script src="src/app.module.js"></script>
+		<script src="src/data.service.js"></script>
+		<script src="src/schedule.service.js"></script>
+		<script src="src/main.controller.js"></script>
+		<script src="src/table.controller.js"></script>
+		<script src="src/timedisplay.filter.js"></script>
+		
+
+		<style>
+
+		.hide {
+			visibility: hidden;
+		}
+
+		body {
+			font-family: 'Lato', sans-serif;
+			text-align: center;
+		}
+
+		.options {
+			clear: both;
+		}
+
+		.selected {
+			display: table;
+			width: 90%;
+			margin: auto;
+		}
+
+		.courses {
+			display: table-row;
+		}
+
+		.courses span {
+			display: table-cell;
+    		padding: 5px 10px;
+		}
+
+		.courses span:first-child {
+		    max-width: 300px;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		    overflow: hidden;
+		}
+
+		.tables {
+		}
+
+		table {
+			display: inline-block;
+			border-collapse: collapse;
+			margin: auto;
+		}
+
+		#term1, #term2 {
+			display: inline-block;
+		}
+
+		td {
+			/*border: 1px solid black;*/
+			width: 100px;
+			height: 20px;
+		}
+		</style>
+		
+	</head>
+	<body ng-app="app">
+		<h1>MacScheduler</h1>
+		<div>
+			Schedule your timetable below using MacScheduler!
+		</div>
+		<div ng-controller="Main as vm">
+			<div class="selected">
+				<div class="courses" ng-repeat="select in vm.selected">
+					<span>{{select.dept}} {{select.code}} - {{select.name}}</span>
+					<span>Term: {{select.term}}</span>
+					<span>Core: C{{select.core}}</span>
+					<span ng-class="{hide: !select.tutorial}">Tutorial: T{{select.tutorial}}</span>
+					<span ng-class="{hide: !select.lab}">Lab: L{{select.lab}}</span>
+					<button>Remove</button>
+				</div>
+			</div>
+			<div class="options">
+				<select ng-model="vm.department" ng-options="code as code for (name, code) in vm.departments">
+					<option value="">Department</option>
+			    </select>
+			    <select ng-model="vm.course" ng-options="course as course.cod+' - '+course.n+' T'+course.t for course in vm.courses">
+					<option value="">Course</option>
+			    </select>
+			    <select ng-model="vm.core" ng-options="core as 'C'+core.n for core in vm.cores">
+					<option value="">Core</option>
+			    </select>
+			    <select ng-model="vm.tutorial" ng-options="tutorial as 'T'+tutorial.n for tutorial in vm.tutorials">
+					<option value="">Tutorial</option>
+			    </select>
+			    <select ng-model="vm.lab" ng-options="lab as 'L'+lab.n for lab in vm.labs">
+					<option value="">Lab</option>
+			    </select>
+		    	
+		    	<button ng-disabled="vm.hideSelect()" ng-click="vm.addCourse()">Select</button>
+			</div>
+
+
+			<div class="tables" ng-controller="Table as tbl">
+				<table id="term1">
+					<tr>
+						<td></td>
+						<td id="mo">Monday</td>
+						<td id="tu">Tuesday</td>
+						<td id="we">Wednesday</td>
+						<td id="th">Thursday</td>
+						<td id="fr">Friday</td>
+						<td id="sa">Saturday</td>
+					</tr>
+					<tr ng-repeat="time in tbl.times">
+						<td>{{time | timeDisplay}}</td>
+						<td ng-attr-id="{{'term1'+'_mo_'+time}}"></td>
+						<td ng-attr-id="{{'term1'+'_tu_'+time}}"></td>
+						<td ng-attr-id="{{'term1'+'_we_'+time}}"></td>
+						<td ng-attr-id="{{'term1'+'_th_'+time}}"></td>
+						<td ng-attr-id="{{'term1'+'_fr_'+time}}"></td>
+						<td ng-attr-id="{{'term1'+'_sa_'+time}}"></td>
+					</tr>
+				</table>
+		    	<table id="term2">
+					<tr>
+						<td></td>
+						<td id="mo">Monday</td>
+						<td id="tu">Tuesday</td>
+						<td id="we">Wednesday</td>
+						<td id="th">Thursday</td>
+						<td id="fr">Friday</td>
+						<td id="sa">Saturday</td>
+					</tr>
+					<tr ng-repeat="time in tbl.times">
+						<td>{{time | timeDisplay}}</td>
+						<td ng-attr-id="{{'term2'+'_mo_'+time}}"></td>
+						<td ng-attr-id="{{'term2'+'_tu_'+time}}"></td>
+						<td ng-attr-id="{{'term2'+'_we_'+time}}"></td>
+						<td ng-attr-id="{{'term2'+'_th_'+time}}"></td>
+						<td ng-attr-id="{{'term2'+'_fr_'+time}}"></td>
+						<td ng-attr-id="{{'term2'+'_sa_'+time}}"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

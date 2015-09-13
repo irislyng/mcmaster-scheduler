@@ -1,0 +1,20 @@
+<table ng-attr-id="{{tbl.id}}">
+	<tr>
+		<td></td>
+		<td id="mo">Monday</td>
+		<td id="tu">Tuesday</td>
+		<td id="we">Wednesday</td>
+		<td id="th">Thursday</td>
+		<td id="fr">Friday</td>
+		<td id="sa">Saturday</td>
+	</tr>
+	<tr ng-repeat="time in tbl.times">
+		<td>{{time | timeDisplay}}</td>
+		<td ng-attr-id="{{tbl.id+'_mo_'+time}}"></td>
+		<td ng-attr-id="{{tbl.id+'_tu_'+time}}"></td>
+		<td ng-attr-id="{{tbl.id+'_we_'+time}}"></td>
+		<td ng-attr-id="{{tbl.id+'_th_'+time}}"></td>
+		<td ng-attr-id="{{tbl.id+'_fr_'+time}}"></td>
+		<td ng-attr-id="{{tbl.id+'_sa_'+time}}"></td>
+	</tr>
+</table>
