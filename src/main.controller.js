@@ -92,8 +92,6 @@
 						course.tutorial_times = vm.tutorial.ti;
 					}
 					if (vm.labs) {
-						console.log('there were labs');
-						console.log(vm.lab);
 						course.lab = vm.lab.n;
 						course.lab_times = vm.lab.ti;
 					}

@@ -8,6 +8,8 @@
 		function Table (ScheduleService, $rootScope) {
 			var vm = this;
 			vm.times = ['800', '830', '900', '930', '1000', '1030', '1100', '1130', '1200', '1230', '1300', '1330', '1400', '1430', '1500', '1530', '1600', '1630', '1700', '1730', '1800', '1830', '1900', '1930', '2000', '2030', '2100', '2130', '2200', '2230'];
+			vm.term1 = [];
+			vm.term2 = [];
 
 			/* Functions */
 			vm.mergeCells = mergeCells;
@@ -19,17 +21,23 @@
 
 			function activate () {	
 				$rootScope.$watch(function () {
-					return ScheduleService;
+					return ScheduleService.one;
 				}, function() {
 					vm.term1 = ScheduleService.one;
-					vm.term2 = ScheduleService.two;
-					setSchedule();
+					setSchedule(1);
 				}, true);
 
 				$rootScope.$watch(function () {
 					return vm.term1;
 				}, function() {
 					ScheduleService.one = vm.term1;
+				}, true);
+
+				$rootScope.$watch(function () {
+					return ScheduleService.two;
+				}, function() {
+					vm.term2 = ScheduleService.two;
+					setSchedule(2);
 				}, true);
 
 				$rootScope.$watch(function () {
@@ -90,10 +98,6 @@
 			}
 
 			function addInfo (startID, endID, cells, info) {
-				console.log(startID);
-				console.log(endID);
-				console.log(cells);
-				console.log(info);
 				var removed = endID;
 				var last, next;
 				for (var i = 0; i < cells-1; i++) {
@@ -109,11 +113,8 @@
 					} else if (last.substr(last.length-2)=='00') {
 						next = (Number(last)-70).toString();
 					}
-					console.log(last);
-					console.log(next);
 					removed = removed.replace(last, next);
 				}
-				console.log(startID);
 				var start =document.getElementById(startID);
 				start.setAttribute('rowspan', cells);
 				start.style.fontSize = "13px";
@@ -127,9 +128,9 @@
 				start.innerHTML = data;
 			}
 
-			function setSchedule () {
+			function setSchedule (term) {
 				/* Term 1 */
-				if(vm.term1.length) {
+				if(vm.term1.length && term==1) {
 					var latest1 = vm.term1[vm.term1.length-1];
 					/* Variables */
 
@@ -160,10 +161,7 @@
 							num: latest1.lab
 						});
 					}
-				}
-
-				/* Term 2 */
-				if(vm.term2.length) {
+				} else if(vm.term2.length && term==2) {
 					var latest2 = vm.term2[vm.term2.length-1];
 					/* Variables */
 
