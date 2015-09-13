@@ -1,0 +1,58 @@
+.hide {
+	visibility: hidden;
+}
+
+body {
+	font-family: 'Lato', sans-serif;
+	text-align: center;
+}
+
+.options {
+	clear: both;
+}
+
+.selected {
+	display: table;
+	width: 90%;
+	margin: auto;
+}
+
+.courses {
+	display: table-row;
+}
+
+.courses span {
+	display: table-cell;
+	padding: 5px 10px;
+}
+
+.courses span:first-child {
+    max-width: 300px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.tables {
+	position: relative;
+}
+
+#term1, #term2 {
+	padding: 0px 20px;
+	vertical-align: top;
+	display: inline-block;
+	border-collapse: collapse;
+	margin: auto;
+}
+
+#term1 td, #term2 td {
+	border-bottom: 1px dotted lightgray;
+	width: 100px;
+	height: 20px;
+}
+
+#term1 td:first-child, #term2 td:first-child {
+	text-align: left;
+	font-weight: bold;
+	padding: 5px 0px;
+}
